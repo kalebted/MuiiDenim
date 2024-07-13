@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:google_fonts/google_fonts.dart';
+import 'package:muiidenim/screens/homePage.dart';
 import 'package:muiidenim/screens/location.dart';
 import 'package:muiidenim/screens/messages.dart';
 import 'package:muiidenim/screens/notifications.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: MainScreen(),
       routes: {
+        'screens/home':(context) => HomePage(),
         'screens/messages': (context) => Messages(),
         'screens/location': (context) => Location(),
         'screens/notifications': (context) => Notifications(),
@@ -31,7 +33,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MainScreen extends StatefulWidget {
-  MainScreen({super.key});
+  const MainScreen({super.key});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -50,24 +52,28 @@ class _MainScreenState extends State<MainScreen> {
 
   int myIndex = 0;
   List<Widget> widgetList = [
+    HomePage(),
     Messages(),
     Location(),
     Notifications(),
     Profile(),
   ];
 
+  // create a separate homepage like I did in the capstone_a project
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'muiidenim',
+          'MuiiDenim',
           style: GoogleFonts.montserrat(
             textStyle: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
               color: primaryColor,
             ),
+            backgroundColor: Color.fromARGB(153, 230, 230, 230),
           ),
         ),
         actions: [
@@ -91,9 +97,15 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-          unselectedItemColor: Colors.black,
-          selectedItemColor: Color.fromARGB(255, 219, 41, 191),
-          currentIndex: 0,
+          backgroundColor: Color.fromARGB(153, 230, 230, 230),
+          unselectedItemColor: secondaryColor,
+          selectedItemColor: primaryColor,
+          onTap: (index) {
+            setState(() {
+              myIndex = index;
+            });          
+          },
+          currentIndex: myIndex,
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
